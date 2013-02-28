@@ -1,4 +1,4 @@
-package com.akzia.googleapi.directions;
+package com.akzia.googleapi.geocoding;
 
 import com.akzia.googleapi.AbstractResponse;
 import com.akzia.googleapi.AbstractTest;
@@ -13,26 +13,28 @@ import java.net.URISyntaxException;
 
 import static junit.framework.Assert.assertTrue;
 
-public class GoogleDirectionsSimpleTest extends AbstractTest {
+public class SimpleTest extends AbstractTest {
 
     @Test
-    public void testAddress() throws Exception {
+    public void testSimple() throws Exception {
         test();
     }
 
     @Override
     protected URI buildRequest() throws UnsupportedEncodingException, URISyntaxException {
-        return new GoogleDirectionsRequest(new GeoPoint(55.688610, 37.693449), new GeoPoint(55.750587, 37.650188)).buildRequest();
+        GoogleGeocodingRequest request = new GoogleGeocodingRequest(new GeoPoint(55.688610, 37.693449));
+        request.setLanguage("ru");
+        return request.buildRequest();
     }
 
     @Override
     protected AbstractResponse parseResponse(Gson gson, Reader reader) {
-        return gson.fromJson(reader, GoogleDirectionsResponse.class);
+        return gson.fromJson(reader, GoogleGeocodingResponse.class);
     }
 
     @Override
     protected void advancedAsserts(AbstractResponse response) {
-        GoogleDirectionsResponse directionsResponse = (GoogleDirectionsResponse) response;
-        assertTrue(directionsResponse.getRoutes().size() > 0);
+        GoogleGeocodingResponse geocodingResponse = (GoogleGeocodingResponse) response;
+        assertTrue(geocodingResponse.getResults().size() > 0);
     }
 }

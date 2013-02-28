@@ -1,8 +1,12 @@
 package com.akzia.googleapi.directions;
 
 import com.akzia.googleapi.AbstractRequest;
+import com.akzia.googleapi.common.GeoPoint;
 import com.google.gson.annotations.SerializedName;
 import org.apache.http.client.utils.URIBuilder;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class GoogleDirectionsRequest extends AbstractRequest {
 
@@ -112,19 +116,19 @@ public class GoogleDirectionsRequest extends AbstractRequest {
     }
 
     @Override
-    protected URIBuilder addParameters(URIBuilder builder) {
+    protected URIBuilder addParameters(URIBuilder builder) throws UnsupportedEncodingException {
         builder.addParameter("sensor", String.valueOf(sensor));
         if (originAddress != null) {
-            builder.addParameter("origin", originAddress);
+            builder.addParameter("origin", URLEncoder.encode(originAddress, "UTF-8"));
         } else if (getOriginLocation() != null) {
-            builder.addParameter("origin", originLocation.toURIParam());
+            builder.addParameter("origin", originLocation.toString());
         } else {
             throw new IllegalArgumentException("Origin is required parameter");
         }
         if (destinationAddress != null) {
-            builder.addParameter("destination", destinationAddress);
+            builder.addParameter("destination", URLEncoder.encode(destinationAddress, "UTF-8"));
         } else if (destinationLocation != null) {
-            builder.addParameter("destination", destinationLocation.toURIParam());
+            builder.addParameter("destination", destinationLocation.toString());
         } else {
             throw new IllegalArgumentException("Destination is required parameter");
         }

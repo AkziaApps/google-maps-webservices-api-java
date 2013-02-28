@@ -1,4 +1,4 @@
-package com.akzia.googleapi.directions;
+package com.akzia.googleapi.common;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -34,15 +34,8 @@ public class GeoPoint {
         this.longitude = longitude;
     }
 
-    public String toURIParam() {
-        return latitude + "," + longitude;
-    }
-
     @Override
     public String toString() {
-        return "GeoPoint{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
+        return latitude + "," + longitude;
     }
 }

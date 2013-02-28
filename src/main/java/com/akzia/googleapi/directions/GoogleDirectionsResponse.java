@@ -1,10 +1,11 @@
 package com.akzia.googleapi.directions;
 
+import com.akzia.googleapi.AbstractResponse;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class GoogleDirectionsResponse {
+public class GoogleDirectionsResponse extends AbstractResponse {
 
     /**
      * Поле "status", входящее в объект ответа службы маршрутов,

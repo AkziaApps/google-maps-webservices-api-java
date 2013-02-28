@@ -1,4 +1,4 @@
-package com.akzia.googleapi.directions;
+package com.akzia.googleapi.common;
 
 import com.google.gson.annotations.SerializedName;
 
