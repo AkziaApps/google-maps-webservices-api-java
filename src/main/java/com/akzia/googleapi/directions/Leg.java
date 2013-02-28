@@ -1,5 +1,6 @@
 package com.akzia.googleapi.directions;
 
+import com.akzia.googleapi.common.GeoPoint;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
