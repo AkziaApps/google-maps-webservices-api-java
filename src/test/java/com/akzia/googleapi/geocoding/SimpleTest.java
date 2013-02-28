@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import static junit.framework.Assert.assertTrue;
@@ -21,7 +20,7 @@ public class SimpleTest extends AbstractTest {
     }
 
     @Override
-    protected URI buildRequest() throws UnsupportedEncodingException, URISyntaxException {
+    protected String buildRequest() throws UnsupportedEncodingException, URISyntaxException {
         GoogleGeocodingRequest request = new GoogleGeocodingRequest(new GeoPoint(55.688610, 37.693449));
         request.setLanguage("ru");
         return request.buildRequest();

@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import static junit.framework.Assert.assertNotNull;
@@ -19,8 +18,8 @@ import static junit.framework.Assert.assertNotNull;
 public abstract class AbstractTest {
 
     public void test() throws IOException, URISyntaxException {
-        URI uri = buildRequest();
-        System.out.println(uri.toString());
+        String uri = buildRequest();
+        System.out.println(uri);
 
         HttpClient client = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(uri);
@@ -39,7 +38,7 @@ public abstract class AbstractTest {
         }
     }
 
-    protected abstract URI buildRequest() throws UnsupportedEncodingException, URISyntaxException;
+    protected abstract String buildRequest() throws UnsupportedEncodingException, URISyntaxException;
 
     protected abstract AbstractResponse parseResponse(Gson gson, Reader reader);
 

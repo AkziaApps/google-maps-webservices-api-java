@@ -8,12 +8,11 @@ import org.junit.Test;
 
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import static junit.framework.Assert.assertTrue;
 
-public class GoogleDirectionsSimpleTest extends AbstractTest {
+public class SimpleTest extends AbstractTest {
 
     @Test
     public void testAddress() throws Exception {
@@ -21,7 +20,7 @@ public class GoogleDirectionsSimpleTest extends AbstractTest {
     }
 
     @Override
-    protected URI buildRequest() throws UnsupportedEncodingException, URISyntaxException {
+    protected String buildRequest() throws UnsupportedEncodingException, URISyntaxException {
         return new GoogleDirectionsRequest(new GeoPoint(55.688610, 37.693449), new GeoPoint(55.750587, 37.650188)).buildRequest();
     }
 
