@@ -1,17 +1,10 @@
 package com.akzia.googleapi.directions;
 
+import com.akzia.googleapi.AbstractRequest;
 import com.google.gson.annotations.SerializedName;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URIUtils;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.client.utils.URIBuilder;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-
-public class GoogleDirectionsRequest {
+public class GoogleDirectionsRequest extends AbstractRequest {
 
     /**
      * origin – адрес отправного пункта маршрута.
@@ -45,6 +38,7 @@ public class GoogleDirectionsRequest {
 
     /**
      * sensor указывает, исходит ли запрос маршрута от устройства с датчиком местоположения.
+     * default - false
      */
     @SerializedName("sensor")
     private boolean sensor;
@@ -52,38 +46,13 @@ public class GoogleDirectionsRequest {
     public GoogleDirectionsRequest(String originAddress, String destinationAddress) {
         this.originAddress = originAddress;
         this.destinationAddress = destinationAddress;
-        this.sensor = true;
+        this.sensor = false;
     }
 
     public GoogleDirectionsRequest(GeoPoint originLocation, GeoPoint destinationLocation) {
         this.originLocation = originLocation;
         this.destinationLocation = destinationLocation;
-        this.sensor = true;
-    }
-
-    public String buildUri() throws URISyntaxException {
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-
-        if (originAddress != null) {
-            pairs.add(new BasicNameValuePair("origin", originAddress));
-        } else if (originLocation != null) {
-            pairs.add(new BasicNameValuePair("origin", originLocation.toURIParam()));
-        } else {
-            throw new IllegalArgumentException("Origin is required parameter");
-        }
-
-        if (destinationAddress != null) {
-            pairs.add(new BasicNameValuePair("destination", destinationAddress));
-        } else if (destinationLocation != null) {
-            pairs.add(new BasicNameValuePair("destination", destinationLocation.toURIParam()));
-        } else {
-            throw new IllegalArgumentException("Destination is required parameter");
-        }
-
-        pairs.add(new BasicNameValuePair("sensor", String.valueOf(sensor)));
-
-        URI uri = URIUtils.createURI("http", "maps.googleapis.com", -1, "/maps/api/directions/json", URLEncodedUtils.format(pairs, "UTF-8"), null);
-        return uri.toString().replace("%2C", ",");
+        this.sensor = false;
     }
 
     public String getOriginAddress() {
@@ -135,5 +104,30 @@ public class GoogleDirectionsRequest {
                 ", destinationLocation=" + destinationLocation +
                 ", sensor=" + sensor +
                 '}';
+    }
+
+    @Override
+    protected String getAPIName() {
+        return "directions";
+    }
+
+    @Override
+    protected URIBuilder addParameters(URIBuilder builder) {
+        builder.addParameter("sensor", String.valueOf(sensor));
+        if (originAddress != null) {
+            builder.addParameter("origin", originAddress);
+        } else if (getOriginLocation() != null) {
+            builder.addParameter("origin", originLocation.toURIParam());
+        } else {
+            throw new IllegalArgumentException("Origin is required parameter");
+        }
+        if (destinationAddress != null) {
+            builder.addParameter("destination", destinationAddress);
+        } else if (destinationLocation != null) {
+            builder.addParameter("destination", destinationLocation.toURIParam());
+        } else {
+            throw new IllegalArgumentException("Destination is required parameter");
+        }
+        return builder;
     }
 }
