@@ -3,13 +3,11 @@ package com.akzia.googleapi.directions;
 import com.akzia.googleapi.AbstractRequest;
 import com.akzia.googleapi.common.GeoPoint;
 import com.google.gson.annotations.SerializedName;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GoogleDirectionsRequest extends AbstractRequest {
 
@@ -119,20 +117,20 @@ public class GoogleDirectionsRequest extends AbstractRequest {
     }
 
     @Override
-    protected List<NameValuePair> addParameters() throws UnsupportedEncodingException {
-        List<NameValuePair> result = new ArrayList<NameValuePair>();
-        result.add(new BasicNameValuePair("sensor", String.valueOf(sensor)));
+    protected Map<String, String> addParameters() throws UnsupportedEncodingException {
+        Map<String, String> result = new HashMap<String, String>();
+        result.put("sensor", String.valueOf(sensor));
         if (originAddress != null) {
-            result.add(new BasicNameValuePair("origin", URLEncoder.encode(originAddress, "UTF-8")));
+            result.put("origin", URLEncoder.encode(originAddress, "UTF-8"));
         } else if (getOriginLocation() != null) {
-            result.add(new BasicNameValuePair("origin", originLocation.toString()));
+            result.put("origin", originLocation.toString());
         } else {
             throw new IllegalArgumentException("Origin is required parameter");
         }
         if (destinationAddress != null) {
-            result.add(new BasicNameValuePair("destination", URLEncoder.encode(destinationAddress, "UTF-8")));
+            result.put("destination", URLEncoder.encode(destinationAddress, "UTF-8"));
         } else if (destinationLocation != null) {
-            result.add(new BasicNameValuePair("destination", destinationLocation.toString()));
+            result.put("destination", destinationLocation.toString());
         } else {
             throw new IllegalArgumentException("Destination is required parameter");
         }

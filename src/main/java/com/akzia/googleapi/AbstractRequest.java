@@ -1,10 +1,8 @@
 package com.akzia.googleapi;
 
-import org.apache.http.NameValuePair;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
-import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractRequest {
 
@@ -17,9 +15,9 @@ public abstract class AbstractRequest {
         builder.append("http://");
         builder.append(HOST);
         builder.append(String.format(PATH, getAPIName()));
-        for (NameValuePair pair : addParameters()) {
+        for (Map.Entry<String, String> pair : addParameters().entrySet()) {
             builder.append("&");
-            builder.append(pair.getName());
+            builder.append(pair.getKey());
             builder.append("=");
             builder.append(pair.getValue());
         }
@@ -28,5 +26,5 @@ public abstract class AbstractRequest {
 
     protected abstract String getAPIName();
 
-    protected abstract List<NameValuePair> addParameters() throws UnsupportedEncodingException;
+    protected abstract Map<String, String> addParameters() throws UnsupportedEncodingException;
 }

@@ -3,13 +3,11 @@ package com.akzia.googleapi.geocoding;
 import com.akzia.googleapi.AbstractRequest;
 import com.akzia.googleapi.common.GeoPoint;
 import com.google.gson.annotations.SerializedName;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GoogleGeocodingRequest extends AbstractRequest {
 
@@ -99,18 +97,18 @@ public class GoogleGeocodingRequest extends AbstractRequest {
     }
 
     @Override
-    protected List<NameValuePair> addParameters() throws UnsupportedEncodingException {
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        pairs.add(new BasicNameValuePair("sensor", String.valueOf(sensor)));
+    protected Map<String, String> addParameters() throws UnsupportedEncodingException {
+        Map<String, String> pairs = new HashMap<String, String>();
+        pairs.put("sensor", String.valueOf(sensor));
         if (address != null) {
-            pairs.add(new BasicNameValuePair("address", URLEncoder.encode(address, "UTF-8")));
+            pairs.put("address", URLEncoder.encode(address, "UTF-8"));
         } else if (latLng != null) {
-            pairs.add(new BasicNameValuePair("latlng", latLng.toString()));
+            pairs.put("latlng", latLng.toString());
         } else {
             throw new IllegalArgumentException("Both address and latlng are null.");
         }
         if (language != null) {
-            pairs.add(new BasicNameValuePair("language", language));
+            pairs.put("language", language);
         }
         return pairs;
     }
