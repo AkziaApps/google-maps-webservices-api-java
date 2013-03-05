@@ -1,11 +1,11 @@
 package com.akzia.googleapi.geocoding;
 
 import com.akzia.googleapi.AbstractRequest;
+import com.akzia.googleapi.common.Bounds;
 import com.akzia.googleapi.common.GeoPoint;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +39,9 @@ public class GoogleGeocodingRequest extends AbstractRequest {
      */
     @SerializedName("language")
     private String language;
+
+    @SerializedName("bounds")
+    private Bounds bounds;
 
     public GoogleGeocodingRequest(String address) {
         this.address = address;
@@ -82,12 +85,22 @@ public class GoogleGeocodingRequest extends AbstractRequest {
         this.language = language;
     }
 
+    public Bounds getBounds() {
+        return bounds;
+    }
+
+    public void setBounds(Bounds bounds) {
+        this.bounds = bounds;
+    }
+
     @Override
     public String toString() {
         return "GoogleGeocodingRequest{" +
                 "address='" + address + '\'' +
                 ", latLng=" + latLng +
                 ", sensor=" + sensor +
+                ", language='" + language + '\'' +
+                ", bounds=" + bounds +
                 '}';
     }
 
@@ -101,7 +114,7 @@ public class GoogleGeocodingRequest extends AbstractRequest {
         Map<String, String> pairs = new HashMap<String, String>();
         pairs.put("sensor", String.valueOf(sensor));
         if (address != null) {
-            pairs.put("address", URLEncoder.encode(address, "UTF-8"));
+            pairs.put("address", address);
         } else if (latLng != null) {
             pairs.put("latlng", latLng.toString());
         } else {
@@ -109,6 +122,9 @@ public class GoogleGeocodingRequest extends AbstractRequest {
         }
         if (language != null) {
             pairs.put("language", language);
+        }
+        if (bounds != null) {
+            pairs.put("bounds", bounds.toString());
         }
         return pairs;
     }

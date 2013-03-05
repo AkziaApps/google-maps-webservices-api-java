@@ -18,7 +18,7 @@ public class Result {
     @SerializedName("formatted_address")
     private String formattedAddress;
 
-    @SerializedName("geomerty")
+    @SerializedName("geometry")
     private Geometry geometry;
 
     /**
@@ -52,6 +52,29 @@ public class Result {
 
     public void setAddressComponents(List<AddressComponent> addressComponents) {
         this.addressComponents = addressComponents;
+    }
+
+    public String getFormattedResult() {
+        String streetAddress = null;
+        String streetNumber = null;
+        String city = null;
+        for (AddressComponent component : getAddressComponents()) {
+            if (component.getTypes().contains(Type.STREET_NUMBER)) {
+                streetNumber = component.getShortName();
+            } else if (component.getTypes().contains(Type.STREET_ADDRESS)) {
+                streetAddress = component.getShortName();
+            } else if (component.getTypes().contains(Type.ROUTE)) {
+                streetAddress = component.getShortName();
+            } else if (component.getTypes().contains(Type.LOCALITY)) {
+                city = component.getShortName();
+            }
+        }
+
+        if (streetAddress != null && streetNumber != null) {
+            return streetAddress + ", " + streetNumber + ", " + city;
+        } else {
+            return getFormattedAddress();
+        }
     }
 
     @Override

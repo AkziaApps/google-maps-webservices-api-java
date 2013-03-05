@@ -2,7 +2,6 @@ package com.akzia.googleapi.geocoding;
 
 import com.akzia.googleapi.AbstractResponse;
 import com.akzia.googleapi.AbstractTest;
-import com.akzia.googleapi.common.GeoPoint;
 import com.google.gson.Gson;
 import org.junit.Test;
 
@@ -10,7 +9,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
-public class PartialOutputTest extends AbstractTest {
+public class TextTest extends AbstractTest {
 
     @Test
     public void testName() throws Exception {
@@ -19,7 +18,7 @@ public class PartialOutputTest extends AbstractTest {
 
     @Override
     protected String buildRequest() throws UnsupportedEncodingException, URISyntaxException {
-        GoogleGeocodingRequest request = new GoogleGeocodingRequest(new GeoPoint(55.688610, 37.693449));
+        GoogleGeocodingRequest request = new GoogleGeocodingRequest("затонная");
         request.setLanguage("ru");
         return request.buildRequest();
     }
@@ -31,7 +30,6 @@ public class PartialOutputTest extends AbstractTest {
 
     @Override
     protected void advancedAsserts(AbstractResponse response) {
-        GoogleGeocodingResponse geocodingResponse = (GoogleGeocodingResponse) response;
-        System.out.println(geocodingResponse.getFirstFormattedResult());
+
     }
 }

@@ -71,7 +71,7 @@ public class GoogleGeocodingResponse extends AbstractResponse {
         this.results = results;
     }
 
-    public String getFormattedResult() {
+    public String getFirstFormattedResult() {
         if (status != Status.OK) {
             return null;
         }
@@ -81,23 +81,7 @@ public class GoogleGeocodingResponse extends AbstractResponse {
             return null;
         }
 
-        String streetAddress = null;
-        String streetNumber = null;
-        for (AddressComponent component : firstResult.getAddressComponents()) {
-            if (component.getTypes().contains(Type.STREET_NUMBER)) {
-                streetNumber = component.getShortName();
-            } else if (component.getTypes().contains(Type.STREET_ADDRESS)) {
-                streetAddress = component.getShortName();
-            } else if (component.getTypes().contains(Type.ROUTE)) {
-                streetAddress = component.getShortName();
-            }
-        }
-
-        if (streetAddress != null && streetNumber != null) {
-            return streetAddress + ", " + streetNumber;
-        } else {
-            return firstResult.getFormattedAddress();
-        }
+        return firstResult.getFormattedResult();
     }
 
     @Override

@@ -13,6 +13,11 @@ public class Bounds {
     public Bounds() {
     }
 
+    public Bounds(GeoPoint northEast, GeoPoint southWest) {
+        this.northEast = northEast;
+        this.southWest = southWest;
+    }
+
     public GeoPoint getNorthEast() {
         return northEast;
     }
@@ -31,9 +36,6 @@ public class Bounds {
 
     @Override
     public String toString() {
-        return "Bounds{" +
-                "northEast=" + northEast +
-                ", southWest=" + southWest +
-                '}';
+        return southWest + "|" + northEast;
     }
 }
