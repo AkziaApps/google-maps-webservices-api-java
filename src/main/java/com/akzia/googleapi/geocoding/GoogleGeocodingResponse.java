@@ -71,6 +71,35 @@ public class GoogleGeocodingResponse extends AbstractResponse {
         this.results = results;
     }
 
+    public String getFormattedResult() {
+        if (status != Status.OK) {
+            return null;
+        }
+
+        Result firstResult = results.get(0);
+        if (firstResult == null) {
+            return null;
+        }
+
+        String streetAddress = null;
+        String streetNumber = null;
+        for (AddressComponent component : firstResult.getAddressComponents()) {
+            if (component.getTypes().contains(Type.STREET_NUMBER)) {
+                streetNumber = component.getShortName();
+            } else if (component.getTypes().contains(Type.STREET_ADDRESS)) {
+                streetAddress = component.getShortName();
+            } else if (component.getTypes().contains(Type.ROUTE)) {
+                streetAddress = component.getShortName();
+            }
+        }
+
+        if (streetAddress != null && streetNumber != null) {
+            return streetAddress + ", " + streetNumber;
+        } else {
+            return firstResult.getFormattedAddress();
+        }
+    }
+
     @Override
     public String toString() {
         return "GoogleGeocodingResponse{" +

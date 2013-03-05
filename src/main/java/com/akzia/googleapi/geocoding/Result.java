@@ -2,6 +2,8 @@ package com.akzia.googleapi.geocoding;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Result {
 
     /**
@@ -18,6 +20,12 @@ public class Result {
 
     @SerializedName("geomerty")
     private Geometry geometry;
+
+    /**
+     * containing the separate address components
+     */
+    @SerializedName("address_components")
+    private List<AddressComponent> addressComponents;
 
     public Result() {
     }
@@ -38,11 +46,20 @@ public class Result {
         this.geometry = geometry;
     }
 
+    public List<AddressComponent> getAddressComponents() {
+        return addressComponents;
+    }
+
+    public void setAddressComponents(List<AddressComponent> addressComponents) {
+        this.addressComponents = addressComponents;
+    }
+
     @Override
     public String toString() {
         return "Result{" +
                 "formattedAddress='" + formattedAddress + '\'' +
                 ", geometry=" + geometry +
+                ", addressComponents=" + addressComponents +
                 '}';
     }
 }
