@@ -2,26 +2,13 @@ package com.akzia.googleapi.geocoding;
 
 import com.akzia.googleapi.AbstractRequest;
 import com.akzia.googleapi.common.Bounds;
-import com.akzia.googleapi.common.GeoPoint;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GoogleGeocodingRequest extends AbstractRequest {
-
-    /**
-     * The address that you want to geocode
-     */
-    @SerializedName("address")
-    private String address;
-
-    /**
-     * The textual latitude/longitude value for which you wish to obtain the closest, human-readable address.
-     */
-    @SerializedName("latlng")
-    private GeoPoint latLng;
+public abstract class AbstractGeocodeRequest extends AbstractRequest {
 
     /**
      * Indicates whether or not the geocoding request comes from a device with a location sensor
@@ -43,30 +30,8 @@ public class GoogleGeocodingRequest extends AbstractRequest {
     @SerializedName("bounds")
     private Bounds bounds;
 
-    public GoogleGeocodingRequest(String address) {
-        this.address = address;
-        this.sensor = false;
-    }
-
-    public GoogleGeocodingRequest(GeoPoint latLng) {
-        this.latLng = latLng;
-        this.sensor = false;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public GeoPoint getLatLng() {
-        return latLng;
-    }
-
-    public void setLatLng(GeoPoint latLng) {
-        this.latLng = latLng;
+    protected AbstractGeocodeRequest(boolean sensor) {
+        this.sensor = sensor;
     }
 
     public boolean isSensor() {
@@ -94,17 +59,6 @@ public class GoogleGeocodingRequest extends AbstractRequest {
     }
 
     @Override
-    public String toString() {
-        return "GoogleGeocodingRequest{" +
-                "address='" + address + '\'' +
-                ", latLng=" + latLng +
-                ", sensor=" + sensor +
-                ", language='" + language + '\'' +
-                ", bounds=" + bounds +
-                '}';
-    }
-
-    @Override
     protected String getAPIName() {
         return "geocode";
     }
@@ -113,13 +67,6 @@ public class GoogleGeocodingRequest extends AbstractRequest {
     protected Map<String, String> addParameters() throws UnsupportedEncodingException {
         Map<String, String> pairs = new HashMap<String, String>();
         pairs.put("sensor", String.valueOf(sensor));
-        if (address != null) {
-            pairs.put("address", address);
-        } else if (latLng != null) {
-            pairs.put("latlng", latLng.toString());
-        } else {
-            throw new IllegalArgumentException("Both address and latlng are null.");
-        }
         if (language != null) {
             pairs.put("language", language);
         }
@@ -127,5 +74,14 @@ public class GoogleGeocodingRequest extends AbstractRequest {
             pairs.put("bounds", bounds.toString());
         }
         return pairs;
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractGeocodeRequest{" +
+                "sensor=" + sensor +
+                ", language='" + language + '\'' +
+                ", bounds=" + bounds +
+                '}';
     }
 }

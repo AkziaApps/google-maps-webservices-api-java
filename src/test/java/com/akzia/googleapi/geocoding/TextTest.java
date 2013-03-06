@@ -18,14 +18,14 @@ public class TextTest extends AbstractTest {
 
     @Override
     protected String buildRequest() throws UnsupportedEncodingException, URISyntaxException {
-        GoogleGeocodingRequest request = new GoogleGeocodingRequest("затонная");
+        GoogleGeocodeRequest request = new GoogleGeocodeRequest(false, "затонная");
         request.setLanguage("ru");
         return request.buildRequest();
     }
 
     @Override
     protected AbstractResponse parseResponse(Gson gson, Reader reader) {
-        return gson.fromJson(reader, GoogleGeocodingResponse.class);
+        return gson.fromJson(reader, GoogleGeocodeResponse.class);
     }
 
     @Override

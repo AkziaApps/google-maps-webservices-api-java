@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class GoogleGeocodingResponse extends AbstractResponse {
+public class GoogleGeocodeResponse extends AbstractResponse {
 
     public enum Status {
         /**
@@ -52,7 +52,7 @@ public class GoogleGeocodingResponse extends AbstractResponse {
     @SerializedName("results")
     private List<Result> results;
 
-    public GoogleGeocodingResponse() {
+    public GoogleGeocodeResponse() {
     }
 
     public Status getStatus() {
@@ -86,7 +86,7 @@ public class GoogleGeocodingResponse extends AbstractResponse {
 
     @Override
     public String toString() {
-        return "GoogleGeocodingResponse{" +
+        return "GoogleGeocodeResponse{" +
                 "status=" + status +
                 ", results=" + results +
                 '}';

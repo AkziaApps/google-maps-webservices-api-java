@@ -19,19 +19,19 @@ public class PartialOutputTest extends AbstractTest {
 
     @Override
     protected String buildRequest() throws UnsupportedEncodingException, URISyntaxException {
-        GoogleGeocodingRequest request = new GoogleGeocodingRequest(new GeoPoint(55.688610, 37.693449));
+        GoogleReverseGeocodeRequest request = new GoogleReverseGeocodeRequest(false, new GeoPoint(55.688610, 37.693449));
         request.setLanguage("ru");
         return request.buildRequest();
     }
 
     @Override
     protected AbstractResponse parseResponse(Gson gson, Reader reader) {
-        return gson.fromJson(reader, GoogleGeocodingResponse.class);
+        return gson.fromJson(reader, GoogleGeocodeResponse.class);
     }
 
     @Override
     protected void advancedAsserts(AbstractResponse response) {
-        GoogleGeocodingResponse geocodingResponse = (GoogleGeocodingResponse) response;
+        GoogleGeocodeResponse geocodingResponse = (GoogleGeocodeResponse) response;
         System.out.println(geocodingResponse.getFirstFormattedResult());
     }
 }

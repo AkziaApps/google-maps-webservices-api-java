@@ -70,7 +70,7 @@ public class Result {
             }
         }
 
-        if (streetAddress != null && streetNumber != null) {
+        if (streetAddress != null && streetNumber != null && city != null) {
             return streetAddress + ", " + streetNumber + ", " + city;
         } else {
             return getFormattedAddress();
