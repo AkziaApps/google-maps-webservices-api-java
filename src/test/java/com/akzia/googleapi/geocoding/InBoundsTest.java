@@ -36,6 +36,11 @@ public class InBoundsTest extends AbstractTest {
     @Override
     protected void advancedAsserts(AbstractResponse response) {
         GoogleGeocodeResponse googleGeocodeResponse = (GoogleGeocodeResponse) response;
-        assertTrue(googleGeocodeResponse.getResults().get(0).getFormattedAddress().contains("Москва"));
+        String formattedAddress = googleGeocodeResponse.getResults().get(0).getFormattedAddress();
+        try {
+            assertTrue(formattedAddress.contains(new String("Москва".getBytes("UTF-8"))));
+        } catch (UnsupportedEncodingException e) {
+
+        }
     }
 }
