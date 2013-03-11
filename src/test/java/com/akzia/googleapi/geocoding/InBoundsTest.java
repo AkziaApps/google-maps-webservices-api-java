@@ -25,7 +25,9 @@ public class InBoundsTest extends AbstractTest {
         GoogleGeocodeRequest request = new GoogleGeocodeRequest(false, "sumskaya");
         request.setLanguage("ru");
         request.setBounds(new Bounds(new GeoPoint(56.150398, 38.279438), new GeoPoint(55.449532, 37.059955)));
-        return request.buildRequest();
+
+        //todo hack
+        return request.buildRequest().replace("|", "%7C");
     }
 
     @Override
