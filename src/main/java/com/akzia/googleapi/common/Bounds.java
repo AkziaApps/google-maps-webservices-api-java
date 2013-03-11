@@ -36,6 +36,6 @@ public class Bounds {
 
     @Override
     public String toString() {
-        return southWest + "|" + northEast;
+        return southWest + "%7C" + northEast;
     }
 }
