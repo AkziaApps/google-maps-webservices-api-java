@@ -71,7 +71,7 @@ public class Result {
         }
 
         if (streetAddress != null && streetNumber != null && city != null) {
-            return streetAddress + ", " + streetNumber + ", " + city;
+            return city + ", " + streetAddress + ", " + streetNumber;
         } else {
             return getFormattedAddress();
         }
